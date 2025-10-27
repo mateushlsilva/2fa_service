@@ -1,8 +1,9 @@
 from models.user_model import UserModel
+from core.deps import get_db
 
 class Crud:
-    def __init__(self, db):
-        self.db = db
+    def __init__(self):
+        self.db = get_db
 
     async def post(self, user: UserModel):
         await self.db.users.insert_one(user.to_dict())
