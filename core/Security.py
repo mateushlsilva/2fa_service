@@ -25,4 +25,4 @@ class Security:
         qr.save(buf, format='PNG')
         buf.seek(0)
 
-        return {"content": buf.getvalue(), "media_type": "image/png", "secret": data["secret"]}
+        return {"qrcode": buf.getvalue(), "media_type": "image/png", "secret": data["secret"]}

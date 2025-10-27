@@ -1,12 +1,12 @@
 from typing import Optional
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 class UserModel:
     def __init__(self, username: str, secret: str, created_at: Optional[datetime] = None):
         self.username = username
         self.secret = secret
-        self.created_at = created_at or datetime.now(datetime.timezone.utc)
+        self.created_at = created_at or datetime.now(timezone.utc)
 
     def to_dict(self):
         return {

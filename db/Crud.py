@@ -1,9 +1,8 @@
 from models.user_model import UserModel
-from core.deps import get_db
 
 class Crud:
-    def __init__(self):
-        self.db = get_db
+    def __init__(self, db):
+        self.db = db
 
     async def post(self, user: UserModel):
         await self.db.users.insert_one(user.to_dict())
@@ -17,7 +16,7 @@ class Crud:
     async def put(self, username, user: UserModel):
         result = await self.db.users.update_one(
             {"username": username}, 
-            {"$set": user}           
+            {"$set": user.to_dict()}           
         )
         return {
             "matched_count": result.matched_count,
