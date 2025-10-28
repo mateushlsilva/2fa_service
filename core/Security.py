@@ -35,3 +35,11 @@ class Security:
         codes = [secrets.token_hex(8) for _ in range(n)] 
         hashed_codes = [hashlib.sha256(code.encode()).hexdigest() for code in codes]
         return {"codes": codes, "hashed_codes": hashed_codes}
+    
+
+    def verify_recovery_code(self, hashed_codes: list[str], code_input: str):
+        hashed_input = hashlib.sha256(code_input.encode()).hexdigest()
+        if hashed_input in hashed_codes:
+            return hashed_input
+        return None
+        
