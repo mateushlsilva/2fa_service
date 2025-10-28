@@ -18,12 +18,11 @@ jobs:
       env:
         DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
         DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
-        TAG: ${{ github.run_id }}
       run:
         docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASS
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/2FAservice:$TAG
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/2FAservice:${{ github.run_id }}
     - name: Docker Push
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/2FAservice:$TAG
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/2FAservice:${{ github.run_id }}
     - name: Docker Logout
       run: docker logout
