@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     DEBUG: bool = False
 
     DATABASE_URL: str
-    
+    ENTERPRISE: str
     model_config = SettingsConfigDict(
         env_file='.env',
         env_file_encoding='utf-8'
