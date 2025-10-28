@@ -1,3 +1,4 @@
+from typing import List
 from pydantic import BaseModel, Field
 from datetime import datetime
 
@@ -9,6 +10,7 @@ class UserOut(BaseModel):
     id: str = Field(alias="_id")
     username: str
     secret: str
+    hashed_codes: List[str]
     created_at: datetime
 
     class Config:
