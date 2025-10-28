@@ -1,11 +1,15 @@
 from models.user_model import UserModel
+from pymongo.errors import DuplicateKeyError
 
 class Crud:
     def __init__(self, db):
         self.db = db
 
     async def post(self, user: UserModel):
-        await self.db.users.insert_one(user.to_dict())
+        try:
+            await self.db.users.insert_one(user.to_dict())
+        except DuplicateKeyError:
+            return
 
     async def get(self, username: str):
         return await self.db.users.find_one({"username": username})
