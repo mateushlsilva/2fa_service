@@ -1,0 +1,29 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Docker Login
+      env:
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+        DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_PASS }}
+        TAG: $(date +%s)
+      run:
+        docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASS
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/2FAservice:$TAG
+    - name: Docker Push
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/2FAservice:$TAG
+    - name: Docker Logout
+      run: docker logout
