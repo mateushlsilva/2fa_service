@@ -4,11 +4,11 @@ from datetime import datetime
 
 
 class UserCreate(BaseModel):
-    username: str
+    identifier: str
 
 class UserOut(BaseModel):
     id: str = Field(alias="_id")
-    username: str
+    identifier: str
     secret: str
     hashed_codes: List[str]
     created_at: datetime
@@ -18,3 +18,8 @@ class UserOut(BaseModel):
         json_encoders = {
             datetime: lambda v: v.isoformat()
         }
+
+
+class RecoveryRequest(BaseModel):
+    identifier: str
+    code: str

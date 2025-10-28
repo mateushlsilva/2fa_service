@@ -11,16 +11,16 @@ class Crud:
         except DuplicateKeyError:
             return
 
-    async def get(self, username: str):
-        return await self.db.users.find_one({"username": username})
+    async def get(self, identifier: str):
+        return await self.db.users.find_one({"identifier": identifier})
 
-    async def delete(self, username: str):
-        return await self.db.users.delete_one({"username": username})
+    async def delete(self, identifier: str):
+        return await self.db.users.delete_one({"identifier": identifier})
     
-    async def put(self, username, user: UserModel):
+    async def put(self, identifier, user: UserModel):
         result = await self.db.users.update_one(
-            {"username": username}, 
-            {"$set": user.to_dict()}           
+            {"identifier": identifier}, 
+            {"$set": user}           
         )
         return {
             "matched_count": result.matched_count,
